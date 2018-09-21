@@ -1,0 +1,12 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# vim
+*.swp
+*.swo
+
+src/lib/*
+!src/lib/__init__.py
+imgur-uploader.alfredworkflow
