@@ -436,7 +436,7 @@ python upload.py</string>
 		<string>IMGUR_CLIENT_ID</string>
 	</array>
 	<key>version</key>
-	<string>0.0.1</string>
+	<string>0.0.2</string>
 	<key>webaddress</key>
 	<string>https://pandorica.io</string>
 </dict>
