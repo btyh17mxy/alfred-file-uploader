@@ -10,11 +10,16 @@ from lib.workflow import Workflow3
 
 def main(wf):
     args = wf.args
-    if args[0] == u'id':
-        set_config('IMGUR_CLIENT_ID', args[1] if len(args) == 2 else '')
+    print(args)
+    if len(args) < 2:
+        return 0
+    if not args[1]:
+        return 0
+    if args[0] == u'imgur_client_id':
+        set_config('IMGUR_CLIENT_ID', args[1])
         notify('imgur client id saved !')
-    elif args[0] == u'secret':
-        set_config('IMGUR_CLIENT_SECRET', args[1] if len(args) == 2 else '')
+    elif args[0] == u'imgur_client_secret':
+        set_config('IMGUR_CLIENT_SECRET', args[1])
         notify('imgur client secret saved !')
     else:
         notify('Nothing to do')

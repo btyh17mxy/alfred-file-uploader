@@ -12,16 +12,16 @@ ICON_KEY = 'key.png'
 def main(wf):
     args = wf.args
     wf.add_item(
-        title=u'set client id', 
+        title=u'set imgur client id', 
         subtitle=u'id',
-        arg='id',
+        arg='imgur_client_id',
         valid=True,
         icon=ICON_KEY
     )
     wf.add_item(
-        title=u'set client secret', 
+        title=u'set imgur client secret', 
         subtitle=u'secret',
-        arg='secret',
+        arg='imgur_client_secret',
         valid=True,
         icon=ICON_KEY
     )

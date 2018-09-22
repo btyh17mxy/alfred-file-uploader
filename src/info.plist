@@ -208,7 +208,7 @@ python upload.py</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>python save.py id {query}</string>
+				<string>python save.py imgur_client_id {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -233,7 +233,7 @@ python upload.py</string>
 				<key>matchmode</key>
 				<integer>0</integer>
 				<key>matchstring</key>
-				<string>id</string>
+				<string>imgur_client_id</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
@@ -274,9 +274,9 @@ python upload.py</string>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>clientID:clientSecret</string>
+				<string>config imgur client id and client secret</string>
 				<key>title</key>
-				<string>config imgur client id and secret</string>
+				<string>config imgur</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -297,7 +297,7 @@ python upload.py</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>python save.py secret {query}</string>
+				<string>python save.py imgur_client_secret {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -345,7 +345,7 @@ python upload.py</string>
 				<key>matchmode</key>
 				<integer>0</integer>
 				<key>matchstring</key>
-				<string>secret</string>
+				<string>imgur_client_secret</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>

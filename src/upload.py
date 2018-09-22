@@ -18,7 +18,7 @@ def get_file_type(file_path):
 
 
 def imgur_uploader(wf, file_path):
-    support_type = ['jpeg', 'png', 'gif', 'apng', 'tiff', 'pdf']
+    support_type = ['jpeg', 'png', 'gif', 'apng', 'tiff', 'pdf', 'jpg']
     if get_file_type(file_path) not in support_type:
         wf.add_item(
             title=u'unsupport file type', 
