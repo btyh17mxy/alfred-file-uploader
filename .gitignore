@@ -9,4 +9,4 @@ __pycache__/
 
 src/lib/*
 !src/lib/__init__.py
-imgur-uploader.alfredworkflow
+*.alfredworkflow
