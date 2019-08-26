@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # encoding: utf-8
-
 import sys
+sys.path.append('./lib')  # noqa
+
 import subprocess
 import hashlib
 
-from lib.workflow import Workflow3 as Workflow
-from lib.workflow.background import is_running, run_in_background
+from workflow import Workflow3 as Workflow
+from workflow.background import is_running, run_in_background
 
 
 ICON_ERROR = 'error.png'
@@ -91,35 +92,42 @@ def main(wf):
             wf.store_data('upload_url', None)
             error = wf.stored_data('upload_error')
             wf.store_data('upload_error', None)
-            wf.add_item(
-                title=u'Copy url',
-                subtitle=url,
-                arg=url,
-                valid=True,
-                icon=ICON_CLIPBOARD,
-                quicklookurl=url
-            )
-            md_url = u'![]({})'.format(url)
-            wf.add_item(
-                title=u'Copy markdown url',
-                subtitle=md_url,
-                arg=md_url,
-                icon=ICON_CLIPBOARD,
-                valid=True
-            )
-            rst_url = u'.. image:: {}'.format(url)
-            wf.add_item(
-                title=u'Copy rst url',
-                subtitle=rst_url,
-                icon=ICON_CLIPBOARD,
-                arg=rst_url,
-                valid=True
-            )
+            if error:
+                wf.add_item(
+                    title=u'Unable to upload',
+                    subtitle=error,
+                    valid=False,
+                    icon=ICON_ERROR
+                )
+            else:
+                wf.add_item(
+                    title=u'Copy url',
+                    subtitle=url,
+                    arg=url,
+                    valid=True,
+                    icon=ICON_CLIPBOARD,
+                    quicklookurl=url
+                )
+                md_url = u'![]({})'.format(url)
+                wf.add_item(
+                    title=u'Copy markdown url',
+                    subtitle=md_url,
+                    arg=md_url,
+                    icon=ICON_CLIPBOARD,
+                    valid=True
+                )
+                rst_url = u'.. image:: {}'.format(url)
+                wf.add_item(
+                    title=u'Copy rst url',
+                    subtitle=rst_url,
+                    icon=ICON_CLIPBOARD,
+                    arg=rst_url,
+                    valid=True
+                )
 
     wf.send_feedback()
 
 
 if __name__ == '__main__':
-    wf = Workflow(libraries=['./lib'])
-    import boto3
+    wf = Workflow()
     sys.exit(wf.run(main))

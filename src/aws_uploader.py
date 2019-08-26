@@ -1,13 +1,15 @@
 #!/usr/bin/python
 # encoding: utf-8
-
-import os
 import sys
+sys.path.append('./lib')  # noqa
+import os
 import urllib
 import mimetypes
 import hashlib
+import boto3
+from boto3.s3.transfer import TransferConfig
 
-from lib.workflow import Workflow3 as Workflow
+from workflow import Workflow3 as Workflow
 
 
 ICON_ERROR = 'error.png'
@@ -82,7 +84,5 @@ def main(wf):
 
 
 if __name__ == '__main__':
-    wf = Workflow(libraries=['./lib'])
-    import boto3
-    from boto3.s3.transfer import TransferConfig
+    wf = Workflow()
     sys.exit(wf.run(main))
