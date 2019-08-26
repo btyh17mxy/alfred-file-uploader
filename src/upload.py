@@ -1,18 +1,12 @@
 #!/usr/bin/python
 # encoding: utf-8
 
-import os
 import sys
 import subprocess
-import requests
-import urllib, mimetypes
 import hashlib
-import re
 
 from lib.workflow import Workflow3 as Workflow
 from lib.workflow.background import is_running, run_in_background
-# from lib.workflow.notify import notify
-from lib.imgurpython import ImgurClient
 
 
 ICON_ERROR = 'error.png'
@@ -43,9 +37,6 @@ def main(wf):
     if not is_uploading and not upload_started:
         log.debug('uploader is not running')
         wf.store_data('uploaded_bytes', 0)
-        # with open('./tmp/uploadProgress', 'wb') as f_progress:
-        #     f_progress.write('0')
-        args = wf.args
         proc = subprocess.Popen(
             [
                 'osascript',
@@ -60,7 +51,7 @@ def main(wf):
 
         if not file_path:
             wf.add_item(
-                title=u'Unable to upload', 
+                title=u'Unable to upload',
                 subtitle='copy a file or image to clipboard',
                 valid=False,
                 icon=ICON_ERROR
@@ -101,26 +92,26 @@ def main(wf):
             error = wf.stored_data('upload_error')
             wf.store_data('upload_error', None)
             wf.add_item(
-                title=u'Copy url', 
+                title=u'Copy url',
                 subtitle=url,
                 arg=url,
                 valid=True,
-                icon=ICON_CLIPBOARD ,
+                icon=ICON_CLIPBOARD,
                 quicklookurl=url
             )
             md_url = u'![]({})'.format(url)
             wf.add_item(
-                title=u'Copy markdown url', 
+                title=u'Copy markdown url',
                 subtitle=md_url,
                 arg=md_url,
-                icon=ICON_CLIPBOARD ,
+                icon=ICON_CLIPBOARD,
                 valid=True
             )
             rst_url = u'.. image:: {}'.format(url)
             wf.add_item(
-                title=u'Copy rst url', 
+                title=u'Copy rst url',
                 subtitle=rst_url,
-                icon=ICON_CLIPBOARD ,
+                icon=ICON_CLIPBOARD,
                 arg=rst_url,
                 valid=True
             )

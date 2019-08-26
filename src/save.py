@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # encoding: utf-8
 import sys
-import os
 
 from lib.workflow.util import set_config
 from lib.workflow.notify import notify
@@ -10,7 +9,6 @@ from lib.workflow import Workflow
 
 def main(wf):
     args = wf.args
-    print(args)
     if len(args) < 2:
         return 0
     if not args[1]:

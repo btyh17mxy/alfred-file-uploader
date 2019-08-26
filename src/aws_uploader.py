@@ -3,11 +3,9 @@
 
 import os
 import sys
-import subprocess
-import requests
-import urllib, mimetypes
+import urllib
+import mimetypes
 import hashlib
-import re
 
 from lib.workflow import Workflow3 as Workflow
 
@@ -18,7 +16,6 @@ uploaded = 0
 
 
 def main(wf):
-    wff = wf
     wf.store_data('is_uploading', 'true')
     wf.store_data('uploaded_bytes', 0)
     wf.store_data('total_bytes', 0)
@@ -54,7 +51,7 @@ def main(wf):
         wf.store_data('total_bytes', progress['total'])
     file_md5 = hashlib.md5(file_body).hexdigest()
     s3_key = 'alfread-upload/%s.%s' % (file_md5, file_path.split('.')[-1])
-    
+
     def progress_listener(chunk):
         global uploaded
         uploaded += chunk
@@ -74,35 +71,6 @@ def main(wf):
     except Exception as e:
         error = str(e)
 
-    # upload with presigned url through Cloudfront not work with Origin Access Identity
-    # upload_url = client.generate_presigned_url(
-    #     'put_object',
-    #     Params={
-    #         'Bucket': aws_bucket_name,
-    #         'Key': s3_key,
-    #         'ContentType': content_type,
-    #     },
-    #     ExpiresIn=300,
-    #     HttpMethod='PUT'
-    # )
-    # upload_url = re.sub(
-    #     r'https://s3\.[a-z0-1-]*\.amazonaws\.com\/[^/]*',
-    #     aws_cdn_prefix,
-    #     upload_url
-    # )
-    # resp = requests.put(
-    #     upload_url,
-    #     data=open(file_path, 'rb'),
-    #     headers={
-    #         'content-type': content_type,
-    #     }
-    # )
-    # if resp.status_code == 200:
-    #     url = os.path.join(aws_cdn_prefix, s3_key)
-    # else:
-    #     error = 'Upload fail, please check log'
-    # return url, error
-
     url = os.path.join(aws_cdn_prefix, s3_key)
     if error:
         wf.store_data('upload_error', error)
@@ -111,6 +79,7 @@ def main(wf):
         wf.store_data('upload_url', url)
         wf.store_data('upload_error', None)
     log.error('done')
+
 
 if __name__ == '__main__':
     wf = Workflow(libraries=['./lib'])
