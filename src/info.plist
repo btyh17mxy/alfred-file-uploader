@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>imgurloader.pandorica.io</string>
+	<string>uploader.pandorica.io</string>
+	<key>category</key>
+	<string>Tools</string>
 	<key>connections</key>
 	<dict>
 		<key>6AF881E1-732F-47C7-80CC-9EF2AC7A82E2</key>
@@ -56,11 +58,9 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Initializing ...</string>
+				<string>uploading ...</string>
 				<key>script</key>
-				<string>query=$1
-
-python upload.py</string>
+				<string>python upload.py</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -100,7 +100,7 @@ python upload.py</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Upload files from clipboard to S3. See https://github.com/btyh17mxy/alfred-file-uploader for more information.</string>
+	<string>Upload files or image from clipboard to imgur or S3. See https://github.com/btyh17mxy/alfred-file-uploader for more information.</string>
 	<key>uidata</key>
 	<dict>
 		<key>1D196807-6D9E-45F4-AE43-9EDA34D268D8</key>
@@ -113,9 +113,9 @@ python upload.py</string>
 		<key>6AF881E1-732F-47C7-80CC-9EF2AC7A82E2</key>
 		<dict>
 			<key>xpos</key>
-			<integer>205</integer>
+			<integer>180</integer>
 			<key>ypos</key>
-			<integer>170</integer>
+			<integer>90</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -134,6 +134,8 @@ python upload.py</string>
 		<string></string>
 		<key>IMGUR_CLIENT_SECRET</key>
 		<string></string>
+		<key>UPLOADER_BACKEND</key>
+		<string>imgur</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
@@ -146,7 +148,7 @@ python upload.py</string>
 		<string>AWS_REGION_NAME</string>
 	</array>
 	<key>version</key>
-	<string>0.0.3</string>
+	<string>1.0.0</string>
 	<key>webaddress</key>
 	<string>https://pandorica.io</string>
 </dict>

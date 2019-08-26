@@ -8,6 +8,7 @@ import mimetypes
 import hashlib
 import boto3
 from boto3.s3.transfer import TransferConfig
+from datetime import datetime
 
 from workflow import Workflow3 as Workflow
 
@@ -52,7 +53,12 @@ def main(wf):
         progress['total'] = len(file_body)
         wf.store_data('total_bytes', progress['total'])
     file_md5 = hashlib.md5(file_body).hexdigest()
-    s3_key = 'alfread-upload/%s.%s' % (file_md5, file_path.split('.')[-1])
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    s3_key = 'alfread-upload/%s/%s.%s' % (
+        date_str,
+        file_md5,
+        file_path.split('.')[-1]
+    )
 
     def progress_listener(chunk):
         global uploaded
