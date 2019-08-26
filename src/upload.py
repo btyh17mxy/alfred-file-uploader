@@ -4,8 +4,14 @@
 import os
 import sys
 import subprocess
+import requests
+import urllib, mimetypes
+import hashlib
+import re
 
-from lib.workflow import Workflow3
+from lib.workflow import Workflow3 as Workflow
+from lib.workflow.background import is_running, run_in_background
+# from lib.workflow.notify import notify
 from lib.imgurpython import ImgurClient
 
 
@@ -17,69 +23,83 @@ def get_file_type(file_path):
     return file_path.split('.')[-1].lower()
 
 
-def imgur_uploader(wf, file_path):
-    support_type = ['jpeg', 'png', 'gif', 'apng', 'tiff', 'pdf', 'jpg']
-    if get_file_type(file_path) not in support_type:
-        wf.add_item(
-            title=u'unsupport file type', 
-            subtitle=u'imgur only support {}'.format(','.join(support_type)),
-            valid=False,
-            icon=ICON_ERROR
-        )
-        error = 'file type not support by imgur'
-        return '', error
-    client_id = os.getenv(u'IMGUR_CLIENT_ID', None)
-    client_secret = os.getenv(u'IMGUR_CLIENT_SECRET', None)
-    url, error = '', False
-
-    if not client_id:
-        wf.add_item(
-            title=u'IMGUR_CLIENT_ID not set', 
-            subtitle=u'please set IMGUR_CLIENT_ID by useing config-imgur',
-            valid=False,
-            icon=ICON_ERROR
-        )
-        error = 'imgur not configured'
-    if not client_secret:
-        wf.add_item(
-            title=u'IMGUR_CLIENT_SECRET not set', 
-            subtitle=u'please set IMGUR_CLIENT_SECRET by useing config-imgur',
-            valid=False,
-            icon=ICON_ERROR
-        )
-        error = 'imgur not configured'
-    if client_id and client_secret:
-        client = ImgurClient(client_id, client_secret)
-        resp = client.upload_from_path(file_path)
-        url = resp['link']
-        error = False
-
-    return url, error
-
-
 def main(wf):
-    args = wf.args
+    log = wf.logger
+    log.debug('main start')
+    try:
+        total_bytes = int(wf.stored_data('total_bytes'))
+        log.debug("totalBytes: %s" % total_bytes)
+    except Exception as e:
+        log.error(e)
 
-    proc = subprocess.Popen(
-        [
-            'osascript',
-            'clipboard.scpt'
-        ],
-        stdout=subprocess.PIPE,
-    )
-    proc.wait()
-    file_path = proc.stdout.readline().strip()
+    is_uploading = False
+    bg_name = wf.stored_data('bg_name')
+    upload_started = wf.stored_data('upload_started')
+    log.debug('upload_started: %s' % upload_started)
+    log.debug('bg_name: %s' % bg_name)
+    if bg_name:
+        is_uploading = is_running(bg_name)
 
-    if not file_path:
-        wf.add_item(
-            title=u'Unable to upload', 
-            subtitle='copy a file or image to clipboard',
-            valid=False,
-            icon=ICON_ERROR
+    if not is_uploading and not upload_started:
+        log.debug('uploader is not running')
+        wf.store_data('uploaded_bytes', 0)
+        # with open('./tmp/uploadProgress', 'wb') as f_progress:
+        #     f_progress.write('0')
+        args = wf.args
+        proc = subprocess.Popen(
+            [
+                'osascript',
+                'clipboard.scpt'
+            ],
+            stdout=subprocess.PIPE,
         )
+        proc.wait()
+        file_path = proc.stdout.readline().strip()
+        bg_name = hashlib.md5(file_path).hexdigest()
+        log.debug(file_path)
+
+        if not file_path:
+            wf.add_item(
+                title=u'Unable to upload', 
+                subtitle='copy a file or image to clipboard',
+                valid=False,
+                icon=ICON_ERROR
+            )
+            wf.store_data('upload_started', False)
+        else:
+            wf.rerun = 0.5
+            wf.store_data('bg_name', bg_name)
+            wf.store_data('upload_started', True)
+            run_in_background(
+                bg_name,
+                [
+                    '/usr/bin/python',
+                    wf.workflowfile('aws_uploader.py'),
+                    file_path
+                ]
+            )
+            wf.add_item(
+                "Upload file",
+                "Uploading in progress ..."
+            )
     else:
-        url, error = imgur_uploader(wf, file_path)
-        if not error:
+        bg_name = wf.stored_data('bg_name')
+        if is_running(bg_name):
+            wf.rerun = 0.5
+            uploaded_bytes = int(wf.stored_data('uploaded_bytes') or 0)
+            percentage = 100.0 * uploaded_bytes / total_bytes
+
+            wf.add_item(
+                "Upload file",
+                "Uploading in progress, %2.1f%% done." % (percentage)
+            )
+        else:
+            """Last case"""
+            wf.store_data('upload_started', False)
+            url = wf.stored_data('upload_url')
+            wf.store_data('upload_url', None)
+            error = wf.stored_data('upload_error')
+            wf.store_data('upload_error', None)
             wf.add_item(
                 title=u'Copy url', 
                 subtitle=url,
@@ -104,18 +124,11 @@ def main(wf):
                 arg=rst_url,
                 valid=True
             )
-        else:
-            wf.add_item(
-                title=u'Upload error', 
-                subtitle=error,
-                arg=error,
-                valid=True,
-                icon=ICON_ERROR
-            )
 
     wf.send_feedback()
 
 
 if __name__ == '__main__':
-    wf = Workflow3(libraries=['./lib'])
+    wf = Workflow(libraries=['./lib'])
+    import boto3
     sys.exit(wf.run(main))

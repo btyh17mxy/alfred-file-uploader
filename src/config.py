@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # encoding: utf-8
 import sys
-from lib.workflow import Workflow3
+from lib.workflow import Workflow
 
 
 ICON_CONFIG = 'config.png'
@@ -25,9 +25,30 @@ def main(wf):
         valid=True,
         icon=ICON_KEY
     )
+    wf.add_item(
+        title=u'set aws access key id', 
+        subtitle=u'aws access key id',
+        arg='aws_access_key_id',
+        valid=True,
+        icon=ICON_KEY
+    )
+    wf.add_item(
+        title=u'set aws secret access key', 
+        subtitle=u'aws secret access key',
+        arg='aws_secret_access_key',
+        valid=True,
+        icon=ICON_KEY
+    )
+    wf.add_item(
+        title=u'set aws region', 
+        subtitle=u'aws region',
+        arg='aws_region',
+        valid=True,
+        icon=ICON_KEY
+    )
     wf.send_feedback()
 
 
 if __name__ == '__main__':
-    wf = Workflow3()
+    wf = Workflow()
     sys.exit(wf.run(main))
