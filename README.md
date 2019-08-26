@@ -17,11 +17,11 @@ Obtain imgur client id and secret from [https://api.imgur.com/oauth2/addclient](
 
 Copy the file and type "upload" then hit enter
 
-![](https://i.imgur.com/YIFsssS.gif)
+![](https://i.imgur.com/kTe0LAR.gif)
 
 ## upload image from clipboard
 
-![](https://cdn.pandorica.io/alfread-upload/2019-08-27/1549f07549bf13a1b3ce4b1c0cdb5b3c.gif)
+![](https://i.imgur.com/MekqOEX.gif)
 
 # Develop
 
