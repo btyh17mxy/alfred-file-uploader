@@ -1,29 +1,27 @@
 # How to use
 
-This workflow can upload image to imgur from your clipboard and it works on both files and screenshots. 
+This workflow can upload image to imgur or AWS S3 from your clipboard and it works on both files and screenshots. 
 
-![](https://i.imgur.com/HcyaCpa.png)
+![](https://cdn.pandorica.io/alfread-upload/2019-08-27/500a0a0d692ea0b6462079ba26a747c2.png)
 
-## set up imgur api
+## set up imgur api or AWS
 
 Obtain imgur client id and secret from [https://api.imgur.com/oauth2/addclient](https://api.imgur.com/oauth2/addclient)
 
-## config alfred-imgur-uploader workflow
-![](https://i.imgur.com/7CAKYVb.png)
-![](https://i.imgur.com/sc9ZtrB.png)
-![](https://i.imgur.com/2MvXHC1.png)
+## config this workflow
+
+![](https://cdn.pandorica.io/alfread-upload/2019-08-27/79ab44457089ee0d5c2f814c99d8a313.png)
 
 
+## upload  file
 
-## upload image file
+Copy the file and type "upload" then hit enter
 
-Copy the image file and type "upload" then hit enter
-
-![](https://i.imgur.com/ow5qJiL.gif)
+![](https://i.imgur.com/YIFsssS.gif)
 
 ## upload image from clipboard
 
-![](https://i.imgur.com/fzmEPpG.gif)
+![](https://cdn.pandorica.io/alfread-upload/2019-08-27/1549f07549bf13a1b3ce4b1c0cdb5b3c.gif)
 
 # Develop
 
