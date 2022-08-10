@@ -128,8 +128,10 @@ def main(wf):
             percentage = 100.0 * uploaded_bytes / total_size
         else:
             percentage = 0.0
-        wf.add_item("upload in progress", subtitle=f'progress: {percentage:.2f}%')
-        # wf.add_item("upload in progress", subtitle=f'progress: {percentage:.2f}% |{"█" * int(0.3*percentage) :-<30}|')
+        if os.getenv('SHOW_PROGRESS_BAR', '0') == '0':
+            wf.add_item("upload in progress", subtitle=f'progress: {percentage:.2f}%')
+        else:
+            wf.add_item("upload in progress", subtitle=f'progress: {percentage:.2f}% |{"█" * int(0.3*percentage) :-<30}|')
         wf.send_feedback()
         return 0
     else:
