@@ -25,7 +25,7 @@
 	<key>createdby</key>
 	<string>Mush</string>
 	<key>description</key>
-	<string></string>
+	<string>Upload file from clipboard to AWS S3</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -345,7 +345,7 @@ pip install -r ./requirements.txt --target=lib
 		</dict>
 	</array>
 	<key>version</key>
-	<string></string>
+	<string>2.0.0</string>
 	<key>webaddress</key>
 	<string></string>
 </dict>

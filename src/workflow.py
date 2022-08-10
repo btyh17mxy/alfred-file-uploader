@@ -545,9 +545,10 @@ class Workflow5Mixin(object):
             if not version:
                 version = self.info.get('version')
 
-            if version:
-                from update import Version
-                version = Version(version)
+            # TODO
+            # if version:
+            #     from update import Version
+            #     version = Version(version)
 
             self._version = version
 

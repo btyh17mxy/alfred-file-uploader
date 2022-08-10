@@ -4,12 +4,8 @@
 """
 Copyright © 2021 dailyinnovation.biz
 """
-from multiprocessing import Process, Pipe
 import sys, os, time, atexit
 import signal
-import time
-import os
-import sys
 
 __author__ = "Mush Mo <mush@dailyinnovation.biz>"
 
@@ -97,10 +93,10 @@ class Daemon:
     def is_running(self):
         try:
             with open(self.pidfile,'r') as pf:
-                pid = int(pf.read().strip())
+                int(pf.read().strip())
             return True
         except IOError:
-            pid = None
+            pass
         return False
 
     def stop(self):
@@ -134,8 +130,4 @@ class Daemon:
                 sys.exit(1)
 
     def run(self):
-        """You should override this method when you subclass Daemon.
-
-        It will be called after the process has been daemonized by
-        start() or restart()."""
-        pass
+        raise NotADirectoryError()
