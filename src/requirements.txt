@@ -1,3 +1,0 @@
-Alfred-Workflow
-imgurpython
-boto3
