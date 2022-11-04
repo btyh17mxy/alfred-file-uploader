@@ -3,16 +3,16 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>uploader.pandorica.io</string>
+	<string>uploader.workflow.pandorica.io</string>
 	<key>category</key>
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
-		<key>6AF881E1-732F-47C7-80CC-9EF2AC7A82E2</key>
+		<key>2D2D2EED-0466-4CBC-AA0A-4CE6E01E5574</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>1D196807-6D9E-45F4-AE43-9EDA34D268D8</string>
+				<string>DC4A4525-D137-45D3-82D3-30C90CCD2B40</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -23,9 +23,9 @@
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string>Mush Mo</string>
+	<string>Mush</string>
 	<key>description</key>
-	<string>upload file to AWS S3</string>
+	<string>Upload file from clipboard to AWS S3</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -46,7 +46,7 @@
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
-				<integer>68</integer>
+				<integer>102</integer>
 				<key>keyword</key>
 				<string>upload</string>
 				<key>queuedelaycustom</key>
@@ -58,13 +58,13 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>uploading ...</string>
+				<string>uploading</string>
 				<key>script</key>
-				<string>python upload.py</string>
+				<string>/usr/bin/python3 uploader.py</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string></string>
+				<string>clipboard.scpt</string>
 				<key>subtext</key>
 				<string>Upload file from clipboard</string>
 				<key>title</key>
@@ -77,7 +77,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>6AF881E1-732F-47C7-80CC-9EF2AC7A82E2</string>
+			<string>2D2D2EED-0466-4CBC-AA0A-4CE6E01E5574</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
@@ -88,68 +88,265 @@
 				<false/>
 				<key>clipboardtext</key>
 				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
 				<key>transient</key>
 				<false/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.clipboard</string>
 			<key>uid</key>
-			<string>1D196807-6D9E-45F4-AE43-9EDA34D268D8</string>
+			<string>DC4A4525-D137-45D3-82D3-30C90CCD2B40</string>
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Upload files or image from clipboard to imgur or S3. See https://github.com/btyh17mxy/alfred-file-uploader for more information.</string>
+	<string># How to use
+
+This workflow can upload image to imgur or AWS S3 from your clipboard and it works on both files and screenshots. 
+
+![](https://cdn.pandorica.io/alfread-upload/2019-08-27/500a0a0d692ea0b6462079ba26a747c2.png)
+
+## set up imgur api or AWS
+
+Obtain imgur client id and secret from [https://api.imgur.com/oauth2/addclient](https://api.imgur.com/oauth2/addclient)
+
+## config this workflow
+
+![](https://cdn.pandorica.io/alfread-upload/2019-08-27/79ab44457089ee0d5c2f814c99d8a313.png)
+
+
+## upload  file
+
+Copy the file and type "upload" then hit enter
+
+![](https://i.imgur.com/kTe0LAR.gif)
+
+## upload image from clipboard
+
+![](https://i.imgur.com/MekqOEX.gif)
+
+# Develop
+
+```
+cd src
+
+pip install -r ./requirements.txt --target=lib
+```</string>
 	<key>uidata</key>
 	<dict>
-		<key>1D196807-6D9E-45F4-AE43-9EDA34D268D8</key>
+		<key>2D2D2EED-0466-4CBC-AA0A-4CE6E01E5574</key>
 		<dict>
 			<key>xpos</key>
-			<integer>605</integer>
+			<real>75</real>
 			<key>ypos</key>
-			<integer>170</integer>
+			<real>45</real>
 		</dict>
-		<key>6AF881E1-732F-47C7-80CC-9EF2AC7A82E2</key>
+		<key>DC4A4525-D137-45D3-82D3-30C90CCD2B40</key>
 		<dict>
 			<key>xpos</key>
-			<integer>180</integer>
+			<real>340</real>
 			<key>ypos</key>
-			<integer>90</integer>
+			<real>45</real>
 		</dict>
 	</dict>
-	<key>variables</key>
-	<dict>
-		<key>AWS_ACCESS_KEY_ID</key>
-		<string></string>
-		<key>AWS_BUCKET_NAME</key>
-		<string></string>
-		<key>AWS_CDN_PREFIX</key>
-		<string></string>
-		<key>AWS_REGION_NAME</key>
-		<string></string>
-		<key>AWS_SECRET_ACCESS_KEY</key>
-		<string></string>
-		<key>IMGUR_CLIENT_ID</key>
-		<string></string>
-		<key>IMGUR_CLIENT_SECRET</key>
-		<string></string>
-		<key>UPLOADER_BACKEND</key>
-		<string>imgur</string>
-	</dict>
-	<key>variablesdontexport</key>
+	<key>userconfigurationconfig</key>
 	<array>
-		<string>AWS_CDN_PREFIX</string>
-		<string>AWS_SECRET_ACCESS_KEY</string>
-		<string>AWS_ACCESS_KEY_ID</string>
-		<string>AWS_BUCKET_NAME</string>
-		<string>IMGUR_CLIENT_SECRET</string>
-		<string>IMGUR_CLIENT_ID</string>
-		<string>AWS_REGION_NAME</string>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>required</key>
+				<false/>
+				<key>text</key>
+				<string>Enabled</string>
+			</dict>
+			<key>description</key>
+			<string>if checked, will show a ascii progress bar when uploading. Monospaced font is recommended when using this feature</string>
+			<key>label</key>
+			<string>Show Progress Bar</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>SHOW_PROGRESS_BAR</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>AWS</string>
+						<string>AWS</string>
+					</array>
+					<array>
+						<string>Imgur</string>
+						<string>Imgur</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>AWS or Imgur</string>
+			<key>label</key>
+			<string>Uploader Type</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>UPLOADER_BACKEND</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Access Key ID for access S3</string>
+			<key>label</key>
+			<string>Access Key ID</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>AK</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Secret  Accese Key for access S3</string>
+			<key>label</key>
+			<string>AWS Secret Access Key</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>SK</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>S3 Bucket Name</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>BUCKET_NAME</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>region of s3</string>
+			<key>label</key>
+			<string>Region Name</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>REGION_NAME</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string>https://cdn.your-domain.com</string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Host name of your cdn with https://</string>
+			<key>label</key>
+			<string>CDN Host</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>CDN_HOST</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Imgur client id</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>IMGUR_CLIENT_ID</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>Imgur client secret</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>IMGUR_CLIENT_SECRET</string>
+		</dict>
 	</array>
 	<key>version</key>
-	<string>1.0.0</string>
+	<string>2.0.0</string>
 	<key>webaddress</key>
-	<string>https://pandorica.io</string>
+	<string></string>
 </dict>
 </plist>
