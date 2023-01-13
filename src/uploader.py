@@ -23,10 +23,10 @@ __author__ = "Mush Mo <mush@dailyinnovation.biz>"
 ICON_ERR = 'error.png'
 ICON_CLIPBOARD = 'clipboard.png'
 
-class MyDaemon(Daemon):
+class UploaderDaemon(Daemon):
 
     def __init__(self, *args, **kwargs):
-        super(MyDaemon, self).__init__(*args, **kwargs)
+        super(UploaderDaemon, self).__init__(*args, **kwargs)
         self.uploaded = 0
 
     def progress_listener(self, chunk):
@@ -81,10 +81,10 @@ class MyDaemon(Daemon):
 def main(wf):
     wf.logger.debug(f"started is_firstrun: {wf.is_firstrun}")
     wf.logger.debug(f"show progress bar: {os.getenv('SHOW_PROGRESS_BAR')} {type(os.getenv('SHOW_PROGRESS_BAR'))}")
-    import json
-    wf.logger.debug(json.dumps(wf.info))
+    # import json
+    # wf.logger.debug(json.dumps(wf.info))
     wf.logger.debug(f"session id: {wf.session_id}")
-    d = MyDaemon(
+    upload_daemon = UploaderDaemon(
         wf,
         os.path.join(wf.cachedir, f'{wf.session_id}.pid'),
     )
@@ -117,9 +117,9 @@ def main(wf):
         wf.logger.debug(file_path)
         wf.add_item("uploading")
         wf.send_feedback()
-        d.start(file_path.decode('utf-8'))
+        upload_daemon.start(file_path.decode('utf-8'))
         return 0
-    if d.is_running:
+    if upload_daemon.is_running:
         wf.rerun = 0.2
         wf.logger.debug('daemon is running')
         uploaded_bytes = int(wf.stored_data('progress', 0))

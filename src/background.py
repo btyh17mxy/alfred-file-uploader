@@ -130,4 +130,4 @@ class Daemon:
                 sys.exit(1)
 
     def run(self):
-        raise NotADirectoryError()
+        raise NotImplementedError()
